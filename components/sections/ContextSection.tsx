@@ -1,184 +1,124 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import Image from 'next/image';
-
-const commandGridItems = [
-  {
-    command: '$ init vector_database',
-    errors: [
-      { message: 'Way too expensive. Time to switch.', type: 'error' },
-      { message: 'Painfully slow. Let\'s try another.', type: 'error' },
-      { message: 'Won\'t scale. Back to square one.', type: 'error' },
-      { message: 'Maintenance nightmare. Need alternatives.', type: 'error' },
-    ]
-  },
-  {
-    command: '$ choose embedding_model',
-    errors: [
-      { message: 'Which model fits your use case?', type: 'warning' },
-      { message: 'Confusing performance tradeoffs', type: 'warning' },
-      { message: 'Can\'t keep up with new releases', type: 'warning' },
-    ]
-  },
-  {
-    command: '$ handle format_parsing',
-    errors: [
-      { message: 'Markdown: Tables break everything', type: 'error' },
-      { message: 'HTML: Scripts and styles interfere', type: 'error' },
-      { message: 'PDF: Layout ruins extraction', type: 'error' },
-      { message: 'Word docs: Unpredictable formatting', type: 'error' },
-    ]
-  },
-  {
-    command: '$ calculate scaling_costs',
-    errors: [
-      { message: 'Costs explode at production scale', type: 'warning' },
-      { message: 'Performance degrades as data grows', type: 'warning' },
-      { message: 'Engineering hours pile up fast', type: 'warning' },
-    ]
-  },
-  {
-    command: '$ setup connection_sync',
-    errors: [
-      { message: 'Sync failures between data sources', type: 'error' },
-      { message: 'API rate limits during large syncs', type: 'error' },
-      { message: 'Images: Need vision models now?', type: 'error' },
-      { message: 'Audio/Video: Transcription costs soar', type: 'error' },
-    ]
-  },
-  {
-    command: '$ init multimodal_support',
-    errors: [
-      { message: 'Websites: JS & rate limits are messy', type: 'error' },
-      { message: 'PDFs: OCR fails, extraction inconsistent', type: 'error' },
-      { message: 'Authentication tokens expire constantly', type: 'error' },
-    ]
-  },
-];
-
-const ErrorIcon = ({ type }: { type: 'error' | 'warning' }) => {
-  if (type === 'error') {
-    return (
-      <div className="w-2 h-2 flex-shrink-0">
-        <svg width="100%" height="100%" viewBox="0 0 8 8" fill="none">
-          <path d="M1.5 7.76705L0.724432 6.99148L6.82955 0.90625L7.60511 1.68182L1.5 7.76705ZM6.82955 7.76705L0.724432 1.68182L1.5 0.90625L7.60511 6.99148L6.82955 7.76705Z" fill="#FB2C36"/>
-        </svg>
-      </div>
-    );
-  }
-  
-  return (
-    <div className="w-3.5 h-3 flex-shrink-0">
-      <svg width="100%" height="100%" viewBox="0 0 14 13" fill="none">
-        <path d="M0 12.5L7 0.5L14 12.5H0ZM7 11.1563C7.265 11.1563 7.49041 11.0625 7.67625 10.875C7.86554 10.684 7.96018 10.4549 7.96018 10.1875C7.96018 9.92014 7.86554 9.69271 7.67625 9.50521C7.49041 9.31424 7.265 9.21875 7 9.21875C6.73501 9.21875 6.50787 9.31424 6.31858 9.50521C6.13274 9.69271 6.03982 9.92014 6.03982 10.1875C6.03982 10.4549 6.13274 10.684 6.31858 10.875C6.50787 11.0625 6.73501 11.1563 7 11.1563ZM6.37021 8.04167H7.62979L7.72271 4.5H6.27729L6.37021 8.04167Z" fill="#FFB900"/>
-      </svg>
-    </div>
-  );
-};
+import { ErrorIcon } from '@/icons/ErrorIcon';
+import { commandGridItems } from '@/lib/data/commandGridItems';
+import { useGSAP } from '@/hooks/useGSAP';
+import { gsap } from 'gsap';
 
 export default function ContextSection() {
-  const contentRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    // Animate content on load
-    if (contentRef.current) {
-      contentRef.current.style.opacity = '1';
-      contentRef.current.style.transform = 'translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg)';
-      contentRef.current.style.transformStyle = 'preserve-3d';
+  useGSAP(() => {
+    // Header animation
+    if (headerRef.current) {
+      gsap.fromTo(
+        headerRef.current.children,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.2,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
     }
 
-    // Animate grid on load with horizontal scroll effect
+    // Grid container animation
     if (gridRef.current) {
-      gridRef.current.style.opacity = '1';
-      gridRef.current.style.transform = 'translate(-97.1805px, 0px)';
-      gridRef.current.style.transformStyle = 'preserve-3d';
+      gsap.fromTo(
+        gridRef.current,
+        { y: 80, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
     }
   }, []);
-
   return (
-    <section 
-      className="relative block overflow-hidden text-white"
-      style={{
-        backgroundColor: 'var(--_super---primary)',
-        paddingTop: '14rem',
-        paddingBottom: '15rem'
-      }}
+    <section
+      ref={sectionRef}
+      className="relative block overflow-hidden text-white bg-background pt-[13.75rem] pb-[15rem]"
     >
-      <div className="container relative z-10 mx-auto px-6 md:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-[105rem] px-[1.75rem]">
         {/* Header Content */}
-        <div 
-          ref={contentRef}
-          className="text-center mb-16"
-          style={{ 
-            opacity: 0, 
-            transform: 'translate3d(0px, 20px, 0px)',
-            transition: 'opacity 0.6s ease, transform 0.6s ease'
-          }}
+        <div
+          ref={headerRef}
+          className="flex flex-col items-center text-center w-full max-w-[68rem] mx-auto gap-12"
         >
           <Image
             src="https://cdn.prod.website-files.com/6826235ef861ed9464b064c8/6826235ef861ed9464b0658a_gradient-ish-symbol.svg"
             alt=""
-            width={80}
-            height={80}
-            className="mx-auto mb-8"
+            width={128}
+            height={96}
+            className="w-[8rem] h-[6rem] -mb-4 opacity-0"
             loading="lazy"
           />
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+          <h2 className="text-white text-[2.5rem] sm:text-[5rem] font-medium tracking-[-4px] pt-0 pl-0 leading-none opacity-0">
             Context<br />is everything
           </h2>
-          <div className="max-w-xl mx-auto">
-            <p className="text-base text-white/80">
+          <div className="max-w-[22ch] opacity-0">
+            <p className="text-base text-white tracking-[-0.03em]">
               Without it, even the smartest AI is just an expensive chatbot
             </p>
           </div>
         </div>
 
         {/* Grid Container */}
-        <div className="relative">
+        <div ref={gridRef} className="mt-[7.5rem] flex flex-col items-center opacity-0">
           {/* Horizontal Border Image */}
           <Image
             src="https://cdn.prod.website-files.com/6826235ef861ed9464b064c8/6826235ef861ed9464b06596_HorizontalBorder.png"
             alt=""
-            width={2706}
-            height={200}
-            className="w-full h-auto mb-8"
+            width={880}
+            height={20}
+            className="w-full max-w-[55rem] h-auto"
             loading="lazy"
-            sizes="(max-width: 2706px) 100vw, 2706px"
           />
 
           {/* Grid Inner Wrapper */}
-          <div className="relative">
+          <div className="relative w-full overflow-clip pt-8 pb-16">
             {/* Left and Right Gradients */}
-            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10" />
-            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10" />
-            
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#1c2026] to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#1c2026] to-transparent z-[100]" />
+
             {/* Scrolling Grid */}
-            <div 
-              ref={gridRef}
-              className="flex gap-4 overflow-hidden"
-              style={{ 
-                opacity: 0,
+            <div
+              className="flex gap-4 animate-marquee"
+              style={{
                 width: 'max-content',
                 whiteSpace: 'nowrap',
-                padding: '0 1vw 0 0',
-                transform: 'translate(-97.1805px, 0px)',
-                transition: 'opacity 0.8s ease, transform 0.8s ease'
               }}
             >
               {/* Duplicate the items to create seamless loop */}
               {[...commandGridItems, ...commandGridItems].map((item, index) => (
-                <div 
-                  key={index} 
-                  className="flex-none w-80 bg-gray-900/30 border border-gray-800/50 rounded-lg p-6"
+                <div
+                  key={index}
+                  className="flex flex-col flex-none w-80 p-8 gap-8 rounded-[1.75rem] bg-[#21252a] shadow-[inset_0_0_0_6px_#06060640,inset_0_6px_3px_#54545440]"
                 >
-                  <div className="text-white font-mono text-base mb-4">{item.command}</div>
-                  <div className="space-y-3">
+                  <div className="text-white font-mono text-base">{item.command}</div>
+                  <div className="flex flex-col gap-2">
                     {item.errors.map((error, errorIndex) => (
-                      <div key={errorIndex} className="flex items-start gap-3">
-                        <ErrorIcon type={error.type} />
-                        <div className="text-xs text-gray-500 uppercase font-medium leading-relaxed">
+                      <div key={errorIndex} className="flex items-center gap-2">
+                        <ErrorIcon type={error.type as 'error' | 'warning'} />
+                        <div className="text-xs text-gray-400 uppercase font-medium leading-relaxed">
                           {error.message}
                         </div>
                       </div>
@@ -196,12 +136,12 @@ export default function ContextSection() {
         src="https://cdn.prod.website-files.com/6826235ef861ed9464b064c8/6826235ef861ed9464b06561_hero-grid.svg"
         alt=""
         fill
-        className="absolute inset-0 object-cover opacity-100"
+        className="absolute inset-0 object-cover opacity-20"
         loading="lazy"
       />
 
       {/* Hero Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30" />
+      <div className="absolute inset-0 z-[1] pointer-events-none bg-[linear-gradient(to_top,var(--background),transparent_44%),linear-gradient(to_bottom,var(--background),transparent)]" />
     </section>
   );
 }

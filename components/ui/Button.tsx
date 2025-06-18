@@ -20,7 +20,7 @@ export default function Button({
   size = 'normal',
   showArrow = false,
 }: ButtonProps) {
-  const wrapperClasses = `button-wrapper inline-block rounded-[1rem] p-[2px] transition-transform duration-200 hover:scale-105 ${className}`;
+  const wrapperClasses = `button-wrapper inline-block rounded-[1rem] p-[2px] transition-transform duration-200 hover:scale-102 ${className}`;
   const wrapperStyle = {
     backgroundImage:
       'linear-gradient(111deg, #a4e8f5, #267ffa 26%, #464646 49%, #747474 74%, #a4e8f5)',

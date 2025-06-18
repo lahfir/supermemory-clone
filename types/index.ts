@@ -14,6 +14,7 @@ export interface SocialLink {
 export interface CodeSnippet {
   language: string;
   code: string;
+  html?: string;
 }
 
 export interface Feature {
@@ -32,11 +33,10 @@ export interface GridFeature {
 }
 
 export interface Testimonial {
-  logo: string;
+  logo: React.ReactNode;
   description: string;
   logoAlt?: string;
-  width?: number;
-  height?: number;
+  marginTop?: string;
 }
 
 export interface TabContent {
@@ -52,4 +52,11 @@ export interface ErrorItem {
 export interface CommandGridItem {
   command: string;
   errors: ErrorItem[];
+}
+
+export interface FeatureItem {
+  number: string;
+  subtitle: string;
+  title: string;
+  description: string;
 }

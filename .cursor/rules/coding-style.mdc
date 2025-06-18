@@ -1,0 +1,26 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Coding Style and Best Practices
+
+Follow these principles to maintain a clean, efficient, and maintainable codebase.
+
+## Modularity
+
+- **Component-Based Architecture**: Break down the UI into small, reusable components. Each component should have a single responsibility.
+- **File Organization**: Keep components in their respective directories (`layout`, `sections`, `ui`). If a component requires its own specific child components, they can be co-located in a folder named after the parent component.
+- **Props**: Use clear and descriptive prop names. For components with many props, consider passing them as an object. Use TypeScript interfaces for defining prop types.
+
+## Performance
+
+- **Lazy Loading**: For components or sections that are not visible in the initial viewport, use `next/dynamic` to lazy load them.
+- **Image Optimization**: Use the `next/image` component for all images to benefit from automatic optimization, resizing, and modern format delivery.
+- **Minimize Re-renders**: Use `React.memo` for components that render frequently with the same props. Use `useCallback` and `useMemo` to memoize functions and values where appropriate.
+
+## Don't Repeat Yourself (DRY)
+
+- **Reusable Components**: Identify and extract repeating UI patterns into reusable components in the `components/ui` directory. For example, buttons, cards, and form elements should be generic components.
+- **Utility Functions**: Extract repeated logic into utility functions.
+- **CSS Variables**: Use the CSS variables defined in `[globals.css](mdc:app/globals.css)` for all styling to ensure consistency and easy theming. Avoid hardcoding colors, fonts, or spacing values directly in components.

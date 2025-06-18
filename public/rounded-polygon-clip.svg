@@ -1,0 +1,22 @@
+<svg width="0" height="0"
+    xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <clipPath id="roundedPolygon" clipPathUnits="objectBoundingBox">
+            <path d="
+        M0.0195 0.0011
+        H0.9405
+        C0.9452 0.0011, 0.9501 0.0072, 0.9544 0.0181
+        L0.9548 0.0192
+        L0.9934 0.1452
+        C0.9979 0.1575, 1 0.1741, 1 0.1913
+        V0.938
+        C1 0.9747, 0.9891 1, 0.9800 1
+        H0.0195
+        C0.0089 1, 0 0.9747, 0 0.938
+        V0.0621
+        C0 0.0284, 0.0089 0.0011, 0.0195 0.0011
+        Z
+      ">            </path>
+        </clipPath>
+    </defs>
+</svg> 

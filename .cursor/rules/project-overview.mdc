@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Overview: Cloning Supermemory Website
+
+Our primary objective is to clone the Supermemory HTML website into a Next.js and Tailwind CSS application. The AI should adhere to the guidelines outlined in all rule files to ensure a consistent, high-quality codebase.
+
+## Project Structure
+
+The project follows a standard Next.js App Router structure. Here is a breakdown of the key directories and their purpose:
+
+- **`app/`**: Contains the core application logic, routing, and global styles.
+  - `[layout.tsx](mdc:app/layout.tsx)`: The root layout for the entire application. All pages share this layout.
+  - `[page.tsx](mdc:app/page.tsx)`: The main entry point for the landing page. It assembles various sections from the `components/sections` directory.
+  - `[globals.css](mdc:app/globals.css)`: Defines global CSS styles, custom properties (variables), and Tailwind CSS base layers. This is the single source of truth for the site's design tokens.
+
+- **`components/`**: Houses all the React components.
+  - **`layout/`**: Components responsible for the overall page structure.
+    - `[Navbar.tsx](mdc:components/layout/Navbar.tsx)`: The website's navigation bar.
+    - `[Footer.tsx](mdc:components/layout/Footer.tsx)`: The website's footer.
+  - **`sections/`**: Components that represent different sections of the landing page.
+    - `[HeroSection.tsx](mdc:components/sections/HeroSection.tsx)`
+    - `[FeaturesSection.tsx](mdc:components/sections/FeaturesSection.tsx)`
+    - etc.
+  - **`ui/`**: Small, reusable UI components.
+    - `[Button.tsx](mdc:components/ui/Button.tsx)`: The primary button component.
+    - `[Container.tsx](mdc:components/ui/Container.tsx)`: A layout component for centering and constraining content width.
+
+- **`public/`**: Stores all static assets like images, SVGs, and fonts.
+
+- **`types/`**: Contains TypeScript type definitions.

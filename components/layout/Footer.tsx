@@ -1,6 +1,10 @@
-import Link from 'next/link';
+'use client';
+
 import Image from 'next/image';
+import Script from 'next/script';
 import Button from '@/components/ui/Button';
+import GithubIcon from '@/icons/testimonials/GithubIcon';
+import type { FC } from 'react';
 
 const footerLinks = [
   { label: 'Updates', href: 'https://docs.supermemory.ai/changelog/overview' },
@@ -9,89 +13,110 @@ const footerLinks = [
   { label: 'Docs', href: 'https://docs.supermemory.ai/introduction' },
 ];
 
-const socialLinks = [
-  { label: 'GitHub', href: 'https://github.com/supermemoryai/supermemory', count: '9.5K' },
-  { label: 'X', href: 'https://x.com/supermemoryai', count: '4.1K' },
-  { label: 'Terms', href: '/terms-of-service' },
-  { label: 'Privacy Policy', href: '/privacy-policy' },
+type SocialLink = {
+  label: string;
+  href: string;
+  count?: string;
+  Icon?: FC<{ className?: string }>;
+};
+
+const socialLinks: ReadonlyArray<SocialLink> = [
+  {
+    label: 'GitHub',
+    href: 'https://github.com/supermemoryai/supermemory',
+    count: '9.5K',
+    Icon: GithubIcon,
+  },
+  {
+    label: 'X',
+    href: 'https://x.com/supermemoryai',
+    count: '4.1K',
+  },
+  {
+    label: 'Terms',
+    href: '/terms-of-service',
+  },
+  {
+    label: 'Privacy Policy',
+    href: '/privacy-policy',
+  },
 ];
 
 export default function Footer() {
   return (
-    <footer className="relative pt-32 pb-20">
-      {/* Gradient overlays */}
-      <div className="absolute top-0 left-0 right-0 h-32">
-        <Image
-          src="/footer-gradient-top.svg"
-          alt=""
-          fill
-          className="object-cover"
-        />
-      </div>
-      <div className="absolute bottom-0 left-0 right-0 h-32">
-        <Image
-          src="/footer-gradient-bottom.svg"
-          alt=""
-          fill
-          className="object-cover"
-        />
-      </div>
+    <footer className="relative flex flex-col pb-8 -mb-px">
+      {/* Gradient images - positioned as direct children like in original HTML */}
+      <Image
+        src="https://cdn.prod.website-files.com/6826235ef861ed9464b064c8/6826235ef861ed9464b06593_footer-gradient-top.svg"
+        alt=""
+        width={1920}
+        height={40}
+        className="w-full h-10 object-cover"
+      />
+      <Image
+        src="https://cdn.prod.website-files.com/6826235ef861ed9464b064c8/6826235ef861ed9464b06592_footer-gradient-bottom.svg"
+        alt=""
+        width={1920}
+        height={40}
+        className="w-full h-10 object-cover"
+      />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8">
+      <div className="relative z-10 px-8 flex flex-col items-center gap-16">
         {/* Logo */}
-        <div className="flex justify-center mb-12">
+        <div className="flex justify-center px-8 pt-12">
           <Image
-            src="https://cdn.prod.website-files.com/6826235ef861ed9464b064c8/6826235ef861ed9464b06541_logo.svg"
+            src="https://cdn.prod.website-files.com/6826235ef861ed9464b064c8/6826235ef861ed9464b06591_footer-logo.svg"
             alt="Supermemory"
             width={200}
             height={80}
-            className="w-48 h-auto"
+            className="w-full h-auto inline-block align-middle"
           />
         </div>
 
         {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Button href="https://console.supermemory.ai/" isExternal>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button href="https://console.supermemory.ai/" isExternal size='large' className='max-w-[24rem] w-[24rem]'>
             Get supermemory<sup className="text-xs">TM</sup>
           </Button>
-          <Button href="https://docs.supermemory.ai/" isExternal variant="secondary">
+          <Button href="https://docs.supermemory.ai/" isExternal size='large' className='max-w-[24rem] w-[24rem]'>
             Start building <sup className="text-xs">DOCS</sup>
           </Button>
         </div>
 
         {/* Footer Info */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8 w-full">
           {/* Left side */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 text-sm">
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-sm md:flex-1">
             <span className="text-gray-500 uppercase">© 2025 supermemory.ai</span>
-            <a 
-              href="http://tonik.com" 
-              target="_blank" 
+            <a
+              href="https://lahfir.me/"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 uppercase hover:text-white transition-colors"
             >
-              made by tonik
+              Cloned by lahfir
             </a>
           </div>
 
           {/* Center - Social links */}
-          <div className="flex items-center gap-6 text-sm">
-            {socialLinks.map((link) => (
+          <div className="flex items-center gap-6 text-sm md:flex-1 justify-center">
+            {socialLinks.map(({ label, href, count, Icon }) => (
               <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                key={label}
+                href={href}
+                target={href.startsWith('http') ? '_blank' : undefined}
+                rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="text-gray-500 hover:text-white transition-colors flex items-center gap-2"
               >
-                {link.label}
-                {link.count && <span>{link.count}</span>}
+                {Icon && <Icon className="w-4 h-4" />}
+                <span>{label}</span>
+                {count && <span>{count}</span>}
               </a>
             ))}
           </div>
 
           {/* Right side - Links */}
-          <div className="flex items-center gap-6 text-sm">
+          <div className="flex items-center gap-6 text-sm md:flex-1 justify-end">
             {footerLinks.map((link) => (
               <a
                 key={link.label}
@@ -107,10 +132,28 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Animated background element (placeholder for Unicorn Studio) */}
-      <div className="absolute bottom-0 left-0 right-0 h-64 opacity-20">
-        <div className="w-full h-full bg-gradient-to-t from-blue-900/20 to-transparent" />
+      {/* Unicorn Studio background */}
+      <div className="absolute inset-0 -z-10">
+        <div
+          id="unicorn-container"
+          data-us-project="uyHjeqAD3OkD10tavjsD"
+          className="w-full h-full min-h-full"
+          style={{ height: '100%', minHeight: '100%' }}
+        />
       </div>
+      <Script
+        src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.25/dist/unicornStudio.umd.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          // @ts-expect-error -- UnicornStudio is a global injected by external script
+          if (window.UnicornStudio && !window.UnicornStudio.isInitialized) {
+            // @ts-expect-error -- UnicornStudio global init method
+            window.UnicornStudio.init();
+            // @ts-expect-error -- UnicornStudio mutation of global flag
+            window.UnicornStudio.isInitialized = true;
+          }
+        }}
+      />
     </footer>
   );
 }

@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Styling Guide: Tailwind CSS and globals.css
+
+This guide outlines the rules for styling the application. The goal is to convert all styles from the original HTML (including inline styles and external/internal CSS) into Tailwind CSS utility classes.
+
+## Tailwind CSS First
+
+- **Utility-First**: Always prefer using Tailwind's utility classes over writing custom CSS.
+- **No Inline Styles**: Do not use the `style` attribute on JSX elements. All styling should be done via `className`.
+- **No Custom CSS Files (mostly)**: Avoid creating new `.css` files for individual components. The vast majority of styling should be achievable with Tailwind. The only exception is for truly global styles or complex animations defined in `[globals.css](mdc:app/globals.css)`.
+
+## Converting from HTML/CSS
+
+- **Analyze Existing Styles**: When given a piece of HTML to clone, inspect its CSS to understand the styling (layout, colors, typography, spacing, etc.).
+- **Map to Tailwind**: Find the corresponding Tailwind utility classes. For example:
+  - `display: flex; align-items: center;` becomes `flex items-center`.
+  - `font-size: 16px;` becomes `text-base`.
+  - `margin-top: 20px;` becomes `mt-5`.
+- **Arbitrary Values**: If a specific value from the original CSS doesn't have a direct Tailwind equivalent (e.g., `top: -1px`), use Tailwind's arbitrary value syntax: `top-[-1px]`. However, prefer using theme values when possible.
+
+## Using `globals.css`
+
+- **The Single Source of Truth**: The file `[globals.css](mdc:app/globals.css)` contains all the design tokens (colors, fonts, spacing) as CSS custom properties.
+- **Reference Variables in `tailwind.config.ts`**: To use these CSS variables within Tailwind's utility classes, they must be referenced in `tailwind.config.ts`. This allows you to use classes like `bg-background` or `text-text-primary`.
+- **Consistency is Key**: When implementing new components, always use the variables from `globals.css`. If a color or value from the original HTML is not in `globals.css`, add it there first, following the existing naming conventions. For example, instead of `bg-[#FF006E]`, add `--color-pink: #FF006E` to `:root` in `globals.css`, add `pink: 'var(--color-pink)'` to the theme in `tailwind.config.ts`, and then use `bg-pink`.
+
+## Responsiveness
+
+- **Mobile-First**: Design and implement components for mobile screens first, then use Tailwind's responsive prefixes (`sm:`, `md:`, `lg:`, etc.) to add styles for larger screens.

@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
+import { useGSAP } from '@/hooks/useGSAP';
+import { gsap } from 'gsap';
 
 const navLinks = [
   { label: 'Blog', href: 'https://supermemory.ai/blog', isExternal: true },
@@ -74,6 +76,24 @@ const socialLinks = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    // Navbar entrance animation
+    if (navRef.current) {
+      gsap.fromTo(
+        navRef.current,
+        { y: -100, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.5
+        }
+      );
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,12 +106,11 @@ export default function Navbar() {
 
   return (
     <div
-      className={`fixed inset-x-0 top-0 z-[99999] flex items-center mt-6 transition-all duration-500 ease-in-out ${isScrolled ? 'w-[calc(100%-4rem)] max-w-[65rem]' : 'w-[calc(100%-4rem)] max-w-[105rem]'
-        } mx-auto`}
+      ref={navRef}
+      className={`fixed inset-x-0 top-0 z-[99999] flex items-center mt-6 ${isScrolled ? 'w-[calc(100%-4rem)] max-w-[65rem]' : 'w-[calc(100%-4rem)] max-w-[105rem]'
+        } mx-auto opacity-0`}
       style={{
-        opacity: 1,
-        transform: 'translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg)',
-        transformStyle: 'preserve-3d'
+        transition: 'max-width 0.5s ease-in-out',
       }}
       role="banner"
     >
